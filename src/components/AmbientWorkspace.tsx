@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { DemoScenario } from '../domain/types'
+import type { DemoScenario, DiagnosisTag, Keyword } from '../domain/types'
 import { useDemoEncounter } from '../hooks/useDemoEncounter'
 import { DiagnosisList } from './DiagnosisList'
 import { EvidencePanel } from './EvidencePanel'
@@ -10,7 +10,11 @@ import { TranscriptPanel } from './TranscriptPanel'
 
 interface AmbientWorkspaceProps {
   scenario: DemoScenario
-  onSelectDiagnosis: (diagnosisId: string) => void
+  onSelectDiagnosis: (
+    diagnosisId: string,
+    keywords: Keyword[],
+    tags: DiagnosisTag[],
+  ) => void
 }
 
 export function AmbientWorkspace({ scenario, onSelectDiagnosis }: AmbientWorkspaceProps) {
@@ -42,7 +46,13 @@ export function AmbientWorkspace({ scenario, onSelectDiagnosis }: AmbientWorkspa
               tagsByDiagnosis={encounter.tagsByDiagnosis}
               onAddTag={encounter.addDiagnosisTag}
               onRemoveTag={encounter.removeDiagnosisTag}
-              onSelect={onSelectDiagnosis}
+              onSelect={(diagnosisId) =>
+                onSelectDiagnosis(
+                  diagnosisId,
+                  encounter.activeKeywords,
+                  encounter.tagsByDiagnosis[diagnosisId] ?? [],
+                )
+              }
             />
           </div>
           <EvidencePanel

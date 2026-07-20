@@ -2,7 +2,7 @@ import type { PatientSummary } from '../domain/types'
 
 interface PatientHeaderProps {
   patient: PatientSummary
-  onOpenEvidence: () => void
+  onOpenEvidence?: () => void
 }
 
 export function PatientHeader({ patient, onOpenEvidence }: PatientHeaderProps) {
@@ -19,9 +19,11 @@ export function PatientHeader({ patient, onOpenEvidence }: PatientHeaderProps) {
         <span><small>과거력</small>{patient.history.join(' · ')}</span>
         <span><small>알레르기</small>{patient.allergies.join(' · ')}</span>
       </div>
-      <button className="evidence-toggle" type="button" onClick={onOpenEvidence}>
-        근거 보기
-      </button>
+      {onOpenEvidence ? (
+        <button className="evidence-toggle" type="button" onClick={onOpenEvidence}>
+          근거 보기
+        </button>
+      ) : null}
     </header>
   )
 }

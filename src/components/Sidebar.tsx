@@ -9,27 +9,40 @@ const navigationItems = [
 
 interface SidebarProps {
   onReset: () => void
+  activeItem?: 'ambient' | 'orders'
 }
 
-export function Sidebar({ onReset }: SidebarProps) {
+export function Sidebar({ onReset, activeItem = 'ambient' }: SidebarProps) {
   return (
     <aside className="sidebar">
       <div className="brand-mark" aria-hidden="true">MV</div>
       <h1>MediVU EMR</h1>
       <nav aria-label="EMR 주요 메뉴">
-        {navigationItems.map((item, index) =>
-          index === 0 ? (
-            <a key={item.label} className="nav-item is-active" href="#/ambient" aria-current="page">
+        {navigationItems.map((item, index) => {
+          const isActive = activeItem === 'ambient' ? index === 0 : index === 4
+
+          return index === 0 ? (
+            <a
+              key={item.label}
+              className={`nav-item ${isActive ? 'is-active' : ''}`}
+              href="#/ambient"
+              aria-current={isActive ? 'page' : undefined}
+            >
               <span className="nav-icon" aria-hidden="true">{item.icon}</span>
               <span>{item.label}</span>
             </a>
           ) : (
-            <span key={item.label} className="nav-item is-muted" aria-disabled="true">
+            <span
+              key={item.label}
+              className={`nav-item ${isActive ? 'is-active' : 'is-muted'}`}
+              aria-current={isActive ? 'page' : undefined}
+              aria-disabled={isActive ? undefined : 'true'}
+            >
               <span className="nav-icon" aria-hidden="true">{item.icon}</span>
               <span>{item.label}</span>
             </span>
-          ),
-        )}
+          )
+        })}
       </nav>
       <button className="sidebar-reset" type="button" onClick={onReset}>
         <span aria-hidden="true">↻</span>

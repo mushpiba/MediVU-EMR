@@ -38,7 +38,12 @@ function DiagnosisCard({
       <div data-testid={`diagnosis-card-${diagnosis.id}`}>
         <div className="diagnosis-main-row">
           <span className="diagnosis-rank">{rank}</span>
-          <button className="diagnosis-select" type="button" onClick={() => onSelect(diagnosis.id)}>
+          <button
+            className="diagnosis-select"
+            type="button"
+            aria-label={`${diagnosis.name} 오더 열기`}
+            onClick={() => onSelect(diagnosis.id)}
+          >
             <span>
               <strong>{diagnosis.name}</strong>
               <small>{diagnosis.code}</small>
