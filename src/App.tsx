@@ -1,7 +1,6 @@
+import { AmbientWorkspace } from './components/AmbientWorkspace'
+import { demoScenario } from './data/demoScenario'
+
 export function App() {
-  return (
-    <main>
-      <h1>MediVU EMR</h1>
-    </main>
-  )
+  return <AmbientWorkspace scenario={demoScenario} onSelectDiagnosis={() => undefined} />
 }
